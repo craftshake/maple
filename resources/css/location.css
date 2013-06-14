@@ -1,0 +1,11 @@
+#map-canvas {
+    height: 350px;
+}
+
+.address {
+    width: 70%;
+}
+
+.geocode-btn {
+    width: 15%;
+}

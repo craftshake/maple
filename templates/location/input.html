@@ -1,0 +1,39 @@
+{% includeJsFile "http://maps.google.com/maps/api/js?sensor=false" %}
+{% includeJsResource "map/js/location.js" %}
+{% includeCssResource "map/css/location.css" %}
+
+{% import "_includes/forms" as forms %}
+
+<div class="field">
+    <input class="text address" id="address" />
+    <button class="btn geocode-btn" type="button" onclick="codeAddress()">Geocode</button>
+    <div id="geocode-spinner" class="spinner hidden"></div>
+</div>
+<div id="map-canvas" class="fullwidth"></div>
+<input id="latLng" type="hidden" name="{{ name }}" value="" />
+<div class="field">
+    <div class="grid">
+        <div class="col col50">
+            <div class="col-inner">
+                {{ forms.textField({
+                    label: "Latitude"|t,
+                    id: "geo-lat",
+                    name: "geo-lat",
+                    value: value.lat,
+                    disabled: "disabled"
+                }) }}
+            </div>
+        </div>
+        <div class="col col50">
+            <div class="col-inner">
+                {{ forms.textField({
+                    label: "Longitude"|t,
+                    id: "geo-lng",
+                    name: "geo-lng",
+                    value: value.lng,
+                    disabled: "disabled"
+                }) }}
+            </div>
+        </div>
+    </div>
+</div>
