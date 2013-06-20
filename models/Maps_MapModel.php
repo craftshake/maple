@@ -4,7 +4,7 @@ namespace Craft;
 class Maps_MapModel extends BaseModel
 {
 
-    public static mapTypes = array(
+    public static $mapTypes = array(
         'HYBRID',
         'ROADMAP',
         'SATELLITE',
@@ -14,6 +14,7 @@ class Maps_MapModel extends BaseModel
     protected function defineAttributes()
     {
         return array(
+            'name' => AttributeType::String,
             'center' => AttributeType::Mixed,
             'zoom' => AttributeType::Number,
             'type' => AttributeType::String,
@@ -21,17 +22,29 @@ class Maps_MapModel extends BaseModel
         );
     }
 
-    public function addMarker(Map_LocationModel $location)
+    public function addMarker(Maps_LocationModel $location)
     {
-        if ($this->markers == null)
-        {
-            $this->markers = array();
-        }
-        $this->markers->push($location);
+        if ($location->isComplete()) {
+            $markers = $this->markers;
+            $markers[] = $location->toJson();
+            $this->markers = $markers;
+        }        
     }
 
-    public function render() {
-        return craft()->templates->render('maps/map', $this->getAttributes());
+    public function addMarkers(array $locations)
+    {
+        foreach ($locations as $location) {
+            $this->addMarker($location);
+        }
+    }
+
+    public function render() {      
+        if (empty($this->name))
+        {
+            $this->name = substr(md5(microtime()),rand(0,26),5);
+        }     
+        craft()->path->setTemplatesPath(craft()->path->getPluginsPath());
+        return craft()->templates->render('maps/templates/map', $this->getAttributes());
     }
 
     public function __toString() {

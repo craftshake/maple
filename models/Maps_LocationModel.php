@@ -18,6 +18,14 @@ class Maps_LocationModel extends BaseModel
         );
     }
 
+    public function isComplete() {
+        return !empty($this->lat) && !empty($this->lng);
+    }
+
+    public function toJson() {
+        return json_encode($this->getAttributes());
+    }
+
     public function __toString()
     {
         return json_encode($this->getAttributes());

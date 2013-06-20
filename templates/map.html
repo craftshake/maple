@@ -1,45 +1,12 @@
+<div id="{{ name ~ 'Map' }}" class="fullwidth mapCanvas"></div>
+
 {% includeCssResource "maps/css/location.css" %}
-
-{% import "_includes/forms" as forms %}
-
-<div class="field">
-    <input id="{{ id ~ 'Address' }}" class="text address" />
-    <button id="{{ id ~ 'Geocode' }}" class="btn geocodeBtn" type="button">Geocode</button>
-    <div id="{{ id ~ 'Spinner' }}" class="spinner hidden"></div>
-</div>
-<div id="{{ id ~ 'Map' }}" class="fullwidth mapCanvas"></div>
-<div class="field">
-    <div class="grid">
-        <div class="col col50">
-            <div class="col-inner">
-                {{ forms.textField({
-                    label: "Latitude"|t,
-                    id: id ~ 'Lat',
-                    name: name ~ '[lat]',
-                    value: (value ? value.lat : null)
-                }) }}
-            </div>
-        </div>
-        <div class="col col50">
-            <div class="col-inner">
-                {{ forms.textField({
-                    label: "Longitude"|t,
-                    id: id ~ 'Lng',
-                    name: name ~ '[lng]',
-                    value: (value ? value.lng : null)
-                }) }}
-            </div>
-        </div>
-    </div>
-</div>
-
 {% set mapjs %}
     var map;
     google.maps.event.addDomListener(window, 'load', function() {
         map = new Maps.Map(
-            "{{ id }}",
-            "{{ (value.lat is defined ? value.lat : false) | e('js') }}",
-            "{{ (value.lat is defined ? value.lng : false) | e('js') }}"
+            "{{ name }}",
+            "{{ markers |json_encode()|raw }}"
         );
     });
 {% endset %}
