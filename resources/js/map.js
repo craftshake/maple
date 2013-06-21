@@ -9,7 +9,7 @@ Maps.Map = Garnish.Base.extend({
 
     name: null,
     map: null,
-    markers: null,
+    markers: [],
     $map: null,
 
     init: function(name, locations, options) {
@@ -20,7 +20,7 @@ Maps.Map = Garnish.Base.extend({
         this.$map = document.getElementById(name + 'Map');
 
         // Initiate google map object
-        var mapOptions = Maps.Location.defaults;        
+        var mapOptions = Maps.Map.defaults;        
         this.map = new google.maps.Map(this.$map, mapOptions);
 
         // Someone's listening?
@@ -29,7 +29,7 @@ Maps.Map = Garnish.Base.extend({
         // Place existing markers on map
         var location;
         for (i = 0; i < locations.length; i++) {
-            location = locations[i];
+            location = JSON.parse(locations[i]);
             this.addMarker(new google.maps.LatLng(location.lat, location.lng, false));
         }
     },
@@ -44,7 +44,7 @@ Maps.Map = Garnish.Base.extend({
             position: latLng,
             draggable: false
         });
-        var this.markers.push(marker);
+        this.markers.push(marker);
     }
 
 },

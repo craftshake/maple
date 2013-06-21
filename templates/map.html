@@ -6,7 +6,7 @@
     google.maps.event.addDomListener(window, 'load', function() {
         map = new Maps.Map(
             "{{ name }}",
-            "{{ markers |json_encode()|raw }}"
+            {{ markers |raw }}
         );
     });
 {% endset %}
