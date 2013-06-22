@@ -12,7 +12,7 @@ Maps.Map = Garnish.Base.extend({
     markers: [],
     $map: null,
 
-    init: function(name, locations, options) {
+    init: function(name, markers, options) {
         // Set some basic properties here
         this.name = name;
 
@@ -20,22 +20,29 @@ Maps.Map = Garnish.Base.extend({
         this.$map = document.getElementById(name + 'Map');
 
         // Initiate google map object
-        var mapOptions = Maps.Map.defaults;        
+        var mapOptions;
+        if (options) {
+            options = JSON.parse(options);
+            mapOptions = {
+                zoom: options.zoom || Maps.Map.defaults.zoom,
+                center: options.center ? new google.maps.LatLng(options.center.jb, options.center.kb, false) : Maps.Map.defaults.center,
+                mapTypeId: options.mapTypeId || Maps.Map.defaults.mapTypeId
+            };
+        }
+        else {
+            mapOptions = Maps.Map.defaults
+        }
         this.map = new google.maps.Map(this.$map, mapOptions);
 
-        // Someone's listening?
-        this.addListeners();
-
         // Place existing markers on map
-        var location;
-        for (i = 0; i < locations.length; i++) {
-            location = JSON.parse(locations[i]);
-            this.addMarker(new google.maps.LatLng(location.lat, location.lng, false));
+        if (markers) {
+            markers = JSON.parse(markers);
+            var marker;
+            for (var i = 0; i < markers.length; i++) {
+                marker = markers[i];
+                this.addMarker(new google.maps.LatLng(marker.lat, marker.lng, false));
+            }
         }
-    },
-
-    addListeners: function() {
-
     },
 
     addMarker: function(latLng) {

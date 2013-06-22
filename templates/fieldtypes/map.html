@@ -1,0 +1,15 @@
+<div id="{{ id ~ 'Map' }}" class="fullwidth mapCanvas"></div>
+<input name="{{ name }}" id="{{ id ~ 'Value' }}" type="hidden" value="hello" />
+
+{% includeCssResource "maps/css/location.css" %}
+{% set mapjs %}
+    var map;
+    google.maps.event.addDomListener(window, 'load', function() {
+        map = new Maps.MapFieldType(
+            "{{ id }}",
+            '{{ (value.markers is defined ? value.markers : null)|json_encode|raw }}',
+            '{{ (value.options is defined ? value.options : null)|json_encode|raw }}'
+        );
+    });
+{% endset %}
+{% includeJs mapjs %}
