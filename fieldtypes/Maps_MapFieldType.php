@@ -27,6 +27,9 @@ class Maps_MapFieldType extends BaseFieldType
 
 	public function prepValue($value)
 	{
+        if (empty($value)) {
+            return new Maps_MapModel();
+        }
         $locations = array();
         foreach ($value['locations'] as $location) {
             $locations[] = array(

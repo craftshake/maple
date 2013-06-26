@@ -11,7 +11,7 @@ class Maps_MapModel extends BaseModel
         'TERRAIN'
     );
 
-    public function __construct($locations, $options)
+    public function __construct($locations = '', $options = '')
     {
         $this->markers = $locations;
         $this->options = $options;
