@@ -36,10 +36,10 @@
 {% set mapjs %}
     var map;
     google.maps.event.addDomListener(window, 'load', function() {
-        map = new Maps.Location(
+        map = new Maps.LocationFieldType(
             "{{ id }}",
-            "{{ (value.lat is defined ? value.lat : false) | e('js') }}",
-            "{{ (value.lat is defined ? value.lng : false) | e('js') }}"
+            {{ (value.lat is defined ? value.lat : 'null') | e('js') }},
+            {{ (value.lat is defined ? value.lng : 'null') | e('js') }}
         );
     });
 {% endset %}

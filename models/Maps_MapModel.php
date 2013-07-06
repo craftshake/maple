@@ -43,9 +43,7 @@ class Maps_MapModel extends BaseModel
 
     public function render() {
         craft()->templates->includeJsFile('http://maps.google.com/maps/api/js?sensor=false');
-        craft()->templates->includeJsResource('lib/jquery-1.9.1.min.js');
-        craft()->templates->includeJsResource('lib/garnish-0.1.min.js');
-        craft()->templates->includeJsResource('maps/js/map.js');
+        craft()->templates->includeJsResource('maps/js/Maps.js');
         craft()->path->setTemplatesPath(craft()->path->getPluginsPath());
         $arguments = $this->getAttributes();
         $arguments['name'] = substr(md5(microtime()),rand(0,26),5);
