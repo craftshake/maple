@@ -22,8 +22,4 @@ class Maps_LocationModel extends BaseModel
         return !empty($this->lat) && !empty($this->lng);
     }
 
-    public function toJson() {
-        return json_encode($this->getAttributes());
-    }
-    
 }

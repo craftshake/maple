@@ -2,12 +2,16 @@ var Maps;
 (function (Maps) {
     var Map = (function () {
         function Map(name, markers, options) {
+            this.autoZoom = false;
             this.name = name;
             this.markers = [];
             this.$map = document.getElementById(name + 'Map');
             var mapOptions;
             if(options) {
                 options = JSON.parse(options);
+                if(options.autoZoom && options.autoZoom == true) {
+                    this.autoZoom = true;
+                }
                 mapOptions = {
                     zoom: options.zoom || Map.defaults.zoom,
                     center: options.center ? new google.maps.LatLng(options.center.jb, options.center.kb, false) : Map.defaults.center,
@@ -39,6 +43,18 @@ var Maps;
                 draggable: draggable
             });
             this.markers.push(marker);
+            if(this.autoZoom) {
+                if(this.markers.length > 1) {
+                    var bounds = new google.maps.LatLngBounds();
+                    for(var i = 0; i < this.markers.length; i++) {
+                        bounds.extend(this.markers[i].position);
+                    }
+                    this.map.fitBounds(bounds);
+                } else {
+                    this.map.panTo(marker.position);
+                    this.map.setZoom(8);
+                }
+            }
             return marker;
         };
         return Map;

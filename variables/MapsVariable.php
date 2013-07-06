@@ -3,7 +3,7 @@ namespace Craft;
 
 class MapsVariable
 {
-    public function renderMap($locations, $options = false)
+    public function renderMap($locations, $options = array(), $autoZoom = true)
     {
     	$markers = array();
         foreach ($locations as $location) {
@@ -12,6 +12,10 @@ class MapsVariable
             {
                 $markers[] = $locationModel;
             }
+        }
+        if ($autoZoom)
+        {
+            $options['autoZoom'] = true;
         }
         $map = new Maps_MapModel($markers, $options);
         $map->markers = $map->markersToArray();

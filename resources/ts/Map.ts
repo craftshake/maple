@@ -11,6 +11,7 @@ module Maps {
         map: any;
         markers: any[];
         $map: any;
+        autoZoom: bool = false;
 
         // Map constructor
         constructor (name: string, markers?: any, options?: any) {
@@ -25,6 +26,9 @@ module Maps {
             var mapOptions;
             if (options) {
                 options = JSON.parse(options);
+                if (options.autoZoom && options.autoZoom == true) {
+                    this.autoZoom = true;
+                }
                 mapOptions = {
                     zoom: options.zoom || Map.defaults.zoom,
                     center: options.center ? new google.maps.LatLng(options.center.jb, options.center.kb, false) : Map.defaults.center,
@@ -56,7 +60,22 @@ module Maps {
                 position: latLng,
                 draggable: draggable
             });
+
             this.markers.push(marker);
+
+            if (this.autoZoom) {
+                if (this.markers.length > 1) {
+                    var bounds = new google.maps.LatLngBounds();
+                    for (var i = 0; i < this.markers.length; i++) {
+                        bounds.extend(this.markers[i].position);
+                    }
+                    this.map.fitBounds(bounds);
+                }
+                else {
+                    this.map.panTo(marker.position);
+                    this.map.setZoom(8);
+                }
+            }
             return marker;
         }
 
