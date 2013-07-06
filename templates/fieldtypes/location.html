@@ -38,8 +38,8 @@
     google.maps.event.addDomListener(window, 'load', function() {
         map = new Maps.LocationFieldType(
             "{{ id }}",
-            {{ (value.lat is defined ? value.lat : 'null') | e('js') }},
-            {{ (value.lat is defined ? value.lng : 'null') | e('js') }}
+            {{ (value.lat is defined ? value.lat : 'null') }},
+            {{ (value.lat is defined ? value.lng : 'null') }}
         );
     });
 {% endset %}

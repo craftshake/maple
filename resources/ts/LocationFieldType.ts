@@ -80,6 +80,13 @@ module Maps {
                 _this.$lat.val(event.latLng.lat());
                 _this.$lng.val(event.latLng.lng());
             });
+            google.maps.event.addListener(marker, 'rightclick', function (event) {
+                _this.markers.splice(_this.markers.indexOf(marker), 1)
+                marker.setMap(null);
+                _this.$lat.val(null);
+                _this.$lng.val(null);
+                console.log(_this.markers);
+            });
             return marker;
         }
 

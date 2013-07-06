@@ -25,22 +25,6 @@ class Maps_MapModel extends BaseModel
         );
     }
 
-    public function addMarker(Maps_LocationModel $location)
-    {
-        if ($location->isComplete()) {
-            $markers = $this->markers;
-            $markers[] = $location->toJson();
-            $this->markers = $markers;
-        }        
-    }
-
-    public function addMarkers(array $locations)
-    {
-        foreach ($locations as $location) {
-            $this->addMarker($location);
-        }
-    }
-
     public function render() {
         craft()->templates->includeJsFile('http://maps.google.com/maps/api/js?sensor=false');
         craft()->templates->includeJsResource('maps/js/Maps.js');
@@ -48,6 +32,19 @@ class Maps_MapModel extends BaseModel
         $arguments = $this->getAttributes();
         $arguments['name'] = substr(md5(microtime()),rand(0,26),5);
         return craft()->templates->render('maps/templates/map', $arguments);
+    }
+
+    public function markersToArray() {
+        $markers = array();
+        foreach ($this->markers as $location) {
+            if ($location->isComplete()) {
+                $markers[] = array(
+                    'lat' => $location->lat,
+                    'lng' => $location->lng
+                );
+            }
+        }
+        return $markers;
     }
 
     public function __toString() {

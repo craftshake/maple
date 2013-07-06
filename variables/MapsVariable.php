@@ -7,12 +7,14 @@ class MapsVariable
     {
     	$markers = array();
         foreach ($locations as $location) {
-            $markers[] = array(
-                'lat' => $location['lat'],
-                'lng' => $location['lng']
-            );
+            $locationModel = new Maps_LocationModel($location['lat'], $location['lng']);
+            if ($locationModel->isComplete())
+            {
+                $markers[] = $locationModel;
+            }
         }
         $map = new Maps_MapModel($markers, $options);
+        $map->markers = $map->markersToArray();
         return $map->render();
     }
 }

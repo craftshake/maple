@@ -32,16 +32,18 @@ class Maps_MapFieldType extends BaseFieldType
         }
         $locations = array();
         foreach ($value['locations'] as $location) {
-            $locations[] = array(
-                'lat' => $location['lat'],
-                'lng' => $location['lng']
-            );
+            $locationModel = new Maps_LocationModel($location['lat'], $location['lng']);
+            if ($locationModel->isComplete())
+            {
+                $locations[] = $locationModel;
+            }
         }
         if (empty($value))
         {
             return null;
         }
         $map = new Maps_MapModel($locations, $value['options']);
+        $map->markers = $map->markersToArray();
 		return $map;
 	}
 }
