@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="craft-maps" default="dist">
+
+    <property file="build.properties" />
+    <property name="dist.name" value="${build.dir}/${project.name}-${project.version}.zip" />
+
+    <!-- Fileset for all files -->
+    <fileset dir="${base.dir}" id="allfiles">
+        <include name="**" />
+        <exclude name="**/ts/"/>
+        <exclude name="build/" />
+    </fileset>
+
+    <!-- ============================================  -->
+    <!-- Target: prepare                               -->
+    <!-- ============================================  -->
+    <target name="prepare">
+        <propertyprompt propertyName="project.version" defaultValue="" promptText="Enter the version" />
+        <delete dir="${build.tempDir}" includeemptydirs="true" verbose="false" failonerror="false" />
+        <delete file="${dist.name}" failonerror="false" />
+        <echo msg="Making directory ${build.tempDir}" />
+        <mkdir dir="${build.tempDir}" />
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: build                                 -->
+    <!-- ============================================  -->
+    <target name="build" depends="prepare">
+        <echo msg="Copying files to build directory..." />
+
+        <copy todir="${build.tempDir}">
+            <fileset refid="allfiles" />
+        </copy>
+    </target>
+
+    <target name="minify" depends="build">
+        <echo msg="Minifying js and css..." />
+        <foreach param="filename" absparam="absfilename" target="minify.file">
+            <fileset dir="${build.jsPath}" includes="${project.name}.js" />
+            <fileset dir="${build.cssPath}" includes="${project.name}.css" />
+        </foreach>
+    </target>
+
+    <target name="minify.file">
+        <echo msg="Minifying ${absfilename}..." />
+        <exec command="java -jar yuicompressor-2.4.6.jar ${absfilename} -o ${absfilename}" />
+    </target>
+
+    <!-- ============================================  -->
+    <!-- (DEFAULT)  Target: dist                       --> 
+    <!-- ============================================  -->
+    <target name="dist" depends="minify">
+        <echo msg="Creating archive..." />
+
+        <zip destfile="${dist.name}">
+            <fileset dir="${build.dir}">
+                <include name="${project.name}/" />
+            </fileset>
+        </zip>
+
+        <echo msg="Files copied and compressed in build directory OK!" />
+    </target>
+</project>
