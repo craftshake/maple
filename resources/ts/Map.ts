@@ -1,6 +1,7 @@
 module Maps {
     export class Map {
 
+        // Some default map options if none specified
         static defaults = {
             zoom: 1,
             center: new google.maps.LatLng(0, 0, false),
@@ -61,8 +62,10 @@ module Maps {
                 draggable: draggable
             });
 
+            // Add marker to the markers array
             this.markers.push(marker);
 
+            // Perform auto zoom if activated
             if (this.autoZoom) {
                 if (this.markers.length > 1) {
                     var bounds = new google.maps.LatLngBounds();

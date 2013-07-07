@@ -9,8 +9,7 @@ module Maps {
         $spinner: any;
 
         constructor(name: string, lat?: number, lng?: number, options?: any) {
-            // Create the markers array for parent constructor
-            
+            // Create the markers array for parent constructor            
             var markers = [];
             if (lat != null && lng != null) {
                 markers = [{
@@ -25,6 +24,7 @@ module Maps {
             this.$lng = $('#' + name + 'Lng');
             this.$spinner = $('#' + name + 'Spinner');
 
+            // Call the constructor
             super(name, JSON.stringify(markers), options);
 
             // Init the geocoder
@@ -36,15 +36,21 @@ module Maps {
 
         addListeners() {
             var _this = this;
+
+            // Add marker on click
             google.maps.event.addListener(this.map, 'click', function (event) {
                 _this.addMarker(event.latLng);
             });
+
+            // Listen to changes on the latitude & longitude fields
             this.$lat.change(function () {
                 _this.updateMarkerPosition(_this.$lat.val(), _this.$lng.val());
             });
             this.$lng.change(function () {
                 _this.updateMarkerPosition(_this.$lat.val(), _this.$lng.val());
             });
+
+            // Prevent form submit on 'enter', geocode instead
             this.$address.keydown(function (event) {
                 if(event.keyCode == 13) {
                     event.preventDefault();
@@ -57,8 +63,12 @@ module Maps {
         geocode() {
             this.$spinner.removeClass('hidden');
             var _this = this;
+
+            // Geocode from the content of the address field
             _this.geocoder.geocode({'address': this.$address.val()}, function(results, status) {
                 _this.$spinner.addClass('hidden');
+
+                // Update marker position on successful geocoding
                 if (status == google.maps.GeocoderStatus.OK) {
                     var lat = results[0].geometry.location.lat();
                     var lng = results[0].geometry.location.lng();
@@ -90,11 +100,15 @@ module Maps {
             // Update the latitude and longitude fields
             _this.$lat.val(latLng.lat());
             _this.$lng.val(latLng.lng());
+
+            // Update marker position when draging
             google.maps.event.addListener(marker, 'dragend', function (event) {
                 marker.setPosition(event.latLng);
                 _this.$lat.val(event.latLng.lat());
                 _this.$lng.val(event.latLng.lng());
             });
+
+            // Remove the marker on right-click
             google.maps.event.addListener(marker, 'rightclick', function (event) {
                 marker.setMap(null);
                 _this.markers = [];                
@@ -105,8 +119,8 @@ module Maps {
         }
 
         updateMarkerPosition(lat: number, lng: number) {
+            // Update marker position
             var latLng = new google.maps.LatLng(lat, lng, false);
-            this.map.panTo(latLng);
             this.addMarker(latLng);
         }
 

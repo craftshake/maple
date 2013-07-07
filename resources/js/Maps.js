@@ -201,7 +201,6 @@ var Maps;
         };
         LocationFieldType.prototype.updateMarkerPosition = function (lat, lng) {
             var latLng = new google.maps.LatLng(lat, lng, false);
-            this.map.panTo(latLng);
             this.addMarker(latLng);
         };
         return LocationFieldType;

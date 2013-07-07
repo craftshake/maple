@@ -2,6 +2,7 @@ module Maps {
     export class MapFieldType extends Map {
 
         constructor(name: string, markers?: any = [], options?: any) {
+            // Call the parent constructor
             super(name, markers, options);
 
             // Someone's listening?
@@ -10,9 +11,13 @@ module Maps {
 
         addListeners() {
             var _this = this;
+
+            // Add marker on click
             google.maps.event.addListener(this.map, 'click', function (event) {
                 _this.addMarker(event.latLng);
             });
+
+            // Prepare value for saving to the database
             $('#content form').submit(function () {
                 var marker;
                 var locations = [];
@@ -38,7 +43,11 @@ module Maps {
 
         addMarker(latLng: google.maps.LatLng): google.maps.Marker {
             var _this = this;
+
+            // Add marker to the map
             var marker = super.addMarker(latLng, true);
+
+            // Remove the marker on right-click
             google.maps.event.addListener(marker, 'rightclick', function (event) {
                 _this.markers.splice(_this.markers.indexOf(marker), 1)
                 marker.setMap(null);
