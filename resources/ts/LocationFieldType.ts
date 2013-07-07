@@ -73,8 +73,21 @@ module Maps {
 
         addMarker(latLng: google.maps.LatLng): google.maps.Marker {
             var _this = this;
-            this.map.clearMarkers();
-            var marker = super.addMarker(latLng, true);
+
+            // We only have one marker to get that one
+            var marker;
+            if (this.markers.length > 0) {
+                marker = this.markers[0];
+                marker.setPosition(latLng);
+            }
+            else {
+                marker = super.addMarker(latLng, true);
+            }
+
+            // Set the map center to the marker
+            this.map.panTo(latLng);
+
+            // Update the latitude and longitude fields
             _this.$lat.val(latLng.lat());
             _this.$lng.val(latLng.lng());
             google.maps.event.addListener(marker, 'dragend', function (event) {
@@ -83,17 +96,15 @@ module Maps {
                 _this.$lng.val(event.latLng.lng());
             });
             google.maps.event.addListener(marker, 'rightclick', function (event) {
-                _this.markers.splice(_this.markers.indexOf(marker), 1)
                 marker.setMap(null);
+                _this.markers = [];                
                 _this.$lat.val(null);
                 _this.$lng.val(null);
-                console.log(_this.markers);
             });
             return marker;
         }
 
         updateMarkerPosition(lat: number, lng: number) {
-            this.map.clearMarkers();
             var latLng = new google.maps.LatLng(lat, lng, false);
             this.map.panTo(latLng);
             this.addMarker(latLng);

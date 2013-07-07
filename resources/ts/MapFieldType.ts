@@ -42,7 +42,6 @@ module Maps {
             google.maps.event.addListener(marker, 'rightclick', function (event) {
                 _this.markers.splice(_this.markers.indexOf(marker), 1)
                 marker.setMap(null);
-                console.log(_this.markers);
             });
             return marker;
         }

@@ -47,11 +47,11 @@ var Maps;
                 if(this.markers.length > 1) {
                     var bounds = new google.maps.LatLngBounds();
                     for(var i = 0; i < this.markers.length; i++) {
-                        bounds.extend(this.markers[i].position);
+                        bounds.extend(this.markers[i].getPosition());
                     }
                     this.map.fitBounds(bounds);
                 } else {
-                    this.map.panTo(marker.position);
+                    this.map.panTo(marker.getPosition());
                     this.map.setZoom(8);
                 }
             }
@@ -108,7 +108,6 @@ var Maps;
             google.maps.event.addListener(marker, 'rightclick', function (event) {
                 _this.markers.splice(_this.markers.indexOf(marker), 1);
                 marker.setMap(null);
-                console.log(_this.markers);
             });
             return marker;
         };
@@ -177,8 +176,14 @@ var Maps;
         };
         LocationFieldType.prototype.addMarker = function (latLng) {
             var _this = this;
-            this.map.clearMarkers();
-            var marker = _super.prototype.addMarker.call(this, latLng, true);
+            var marker;
+            if(this.markers.length > 0) {
+                marker = this.markers[0];
+                marker.setPosition(latLng);
+            } else {
+                marker = _super.prototype.addMarker.call(this, latLng, true);
+            }
+            this.map.panTo(latLng);
             _this.$lat.val(latLng.lat());
             _this.$lng.val(latLng.lng());
             google.maps.event.addListener(marker, 'dragend', function (event) {
@@ -187,16 +192,14 @@ var Maps;
                 _this.$lng.val(event.latLng.lng());
             });
             google.maps.event.addListener(marker, 'rightclick', function (event) {
-                _this.markers.splice(_this.markers.indexOf(marker), 1);
                 marker.setMap(null);
+                _this.markers = [];
                 _this.$lat.val(null);
                 _this.$lng.val(null);
-                console.log(_this.markers);
             });
             return marker;
         };
         LocationFieldType.prototype.updateMarkerPosition = function (lat, lng) {
-            this.map.clearMarkers();
             var latLng = new google.maps.LatLng(lat, lng, false);
             this.map.panTo(latLng);
             this.addMarker(latLng);
@@ -206,20 +209,3 @@ var Maps;
     Maps.LocationFieldType = LocationFieldType;    
 })(Maps || (Maps = {}));
 google.maps.visualRefresh = true;
-google.maps.Map.prototype.markers = new Array();
-google.maps.Map.prototype.getMarkers = function () {
-    return this.markers;
-};
-google.maps.Map.prototype.clearMarkers = function () {
-    for(var i = 0; i < this.markers.length; i++) {
-        this.markers[i].setMap(null);
-    }
-    this.markers = new Array();
-};
-google.maps.Marker.prototype._setMap = google.maps.Marker.prototype.setMap;
-google.maps.Marker.prototype.setMap = function (map) {
-    if(map) {
-        map.markers[map.markers.length] = this;
-    }
-    this._setMap(map);
-};

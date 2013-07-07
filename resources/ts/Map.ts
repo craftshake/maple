@@ -67,12 +67,12 @@ module Maps {
                 if (this.markers.length > 1) {
                     var bounds = new google.maps.LatLngBounds();
                     for (var i = 0; i < this.markers.length; i++) {
-                        bounds.extend(this.markers[i].position);
+                        bounds.extend(this.markers[i].getPosition());
                     }
                     this.map.fitBounds(bounds);
                 }
                 else {
-                    this.map.panTo(marker.position);
+                    this.map.panTo(marker.getPosition());
                     this.map.setZoom(8);
                 }
             }
