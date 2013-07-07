@@ -1,1 +1,1 @@
---watch --out "../js/Maps.js" Maps.ts
+--out "../js/maps.js" Maps.ts --watch

@@ -16,7 +16,7 @@ class Maps_LocationFieldType extends BaseFieldType
 	public function getInputHtml($name, $location)
 	{
         craft()->templates->includeJsFile('http://maps.google.com/maps/api/js?sensor=false');
-        craft()->templates->includeJsResource('maps/js/Maps.js');
+        craft()->templates->includeJsResource('maps/js/maps.js');
         $id = rtrim(preg_replace('/[\[\]]+/', '-', $name), '-');
 		return craft()->templates->render('maps/fieldtypes/location', array(
             'id' => $id,
