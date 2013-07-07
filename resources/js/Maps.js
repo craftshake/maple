@@ -76,6 +76,7 @@ var Maps;
                 if(event.keyCode == 13) {
                     event.preventDefault();
                     _this.geocode();
+                    $(this).val('');
                     return false;
                 }
             });
@@ -115,6 +116,7 @@ var Maps;
         function MapFieldType(name, markers, options) {
             if (typeof markers === "undefined") { markers = []; }
                 _super.call(this, name, markers, options);
+            this.geocoder = new Maps.Geocoder(name);
             this.addListeners();
         }
         MapFieldType.prototype.addListeners = function () {
@@ -142,6 +144,13 @@ var Maps;
                 };
                 $('#' + _this.name + 'Value').val(JSON.stringify(value));
                 return true;
+            });
+            this.geocoder.$address.on('geocoded', function (event, args) {
+                if(args.status == google.maps.GeocoderStatus.OK) {
+                    _this.addMarker(args.location);
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + args.status);
+                }
             });
         };
         MapFieldType.prototype.addMarker = function (latLng) {

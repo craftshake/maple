@@ -1,9 +1,14 @@
 module Maps {
     export class MapFieldType extends Map {
 
+        geocoder: any;
+
         constructor(name: string, markers?: any = [], options?: any) {
             // Call the parent constructor
             super(name, markers, options);
+
+            // Create the geocoder
+            this.geocoder = new Maps.Geocoder(name);
 
             // Someone's listening?
             this.addListeners();
@@ -38,6 +43,17 @@ module Maps {
                 }
                 $('#' + _this.name + 'Value').val(JSON.stringify(value));
                 return true;
+            });
+
+            // Listen to geocoding events
+            this.geocoder.$address.on('geocoded', function(event, args) {
+                // Update marker position on successful geocoding
+                if (args.status == google.maps.GeocoderStatus.OK) {
+                    _this.addMarker(args.location);
+                }
+                else {
+                    alert('Geocode was not successful for the following reason: ' + args.status);
+                }
             });
         }
 

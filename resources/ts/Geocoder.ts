@@ -23,6 +23,7 @@ module Maps {
                 if(event.keyCode == 13) {
                     event.preventDefault();
                     _this.geocode();
+                    $(this).val('');
                     return false;
                 }      
             });
