@@ -61,6 +61,48 @@ var Maps;
     })();
     Maps.Map = Map;    
 })(Maps || (Maps = {}));
+var Maps;
+(function (Maps) {
+    var Geocoder = (function () {
+        function Geocoder(name) {
+            this.$address = $('#' + name + 'Address');
+            this.$spinner = $('#' + name + 'Spinner');
+            this.geocoder = new google.maps.Geocoder();
+            this.addListeners();
+        }
+        Geocoder.prototype.addListeners = function () {
+            var _this = this;
+            this.$address.keydown(function (event) {
+                if(event.keyCode == 13) {
+                    event.preventDefault();
+                    _this.geocode();
+                    return false;
+                }
+            });
+        };
+        Geocoder.prototype.geocode = function () {
+            this.$spinner.removeClass('hidden');
+            var _this = this;
+            this.geocoder.geocode({
+                'address': this.$address.val()
+            }, function (results, status) {
+                _this.$spinner.addClass('hidden');
+                var args = {
+                    status: status,
+                    location: new google.maps.LatLng(0, 0, false)
+                };
+                if(status == google.maps.GeocoderStatus.OK) {
+                    var lat = results[0].geometry.location.lat();
+                    var lng = results[0].geometry.location.lng();
+                    args.location = new google.maps.LatLng(lat, lng, false);
+                }
+                _this.$address.trigger("geocoded", args);
+            });
+        };
+        return Geocoder;
+    })();
+    Maps.Geocoder = Geocoder;    
+})(Maps || (Maps = {}));
 var __extends = this.__extends || function (d, b) {
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -129,12 +171,10 @@ var Maps;
                     }
                 ];
             }
-            this.$address = $('#' + name + 'Address');
             this.$lat = $('#' + name + 'Lat');
             this.$lng = $('#' + name + 'Lng');
-            this.$spinner = $('#' + name + 'Spinner');
+            this.geocoder = new Maps.Geocoder(name);
                 _super.call(this, name, JSON.stringify(markers), options);
-            this.geocoder = new google.maps.Geocoder();
             this.addListeners();
         }
         LocationFieldType.prototype.addListeners = function () {
@@ -148,29 +188,13 @@ var Maps;
             this.$lng.change(function () {
                 _this.updateMarkerPosition(_this.$lat.val(), _this.$lng.val());
             });
-            this.$address.keydown(function (event) {
-                if(event.keyCode == 13) {
-                    event.preventDefault();
-                    _this.geocode();
-                    return false;
-                }
-            });
-        };
-        LocationFieldType.prototype.geocode = function () {
-            this.$spinner.removeClass('hidden');
-            var _this = this;
-            _this.geocoder.geocode({
-                'address': this.$address.val()
-            }, function (results, status) {
-                _this.$spinner.addClass('hidden');
-                if(status == google.maps.GeocoderStatus.OK) {
-                    var lat = results[0].geometry.location.lat();
-                    var lng = results[0].geometry.location.lng();
-                    _this.$lat.val(lat);
-                    _this.$lng.val(lng);
-                    _this.updateMarkerPosition(lat, lng);
+            this.geocoder.$address.on('geocoded', function (event, args) {
+                if(args.status == google.maps.GeocoderStatus.OK) {
+                    _this.$lat.val(args.location.lat());
+                    _this.$lng.val(args.location.lng());
+                    _this.addMarker(args.location);
                 } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
+                    alert('Geocode was not successful for the following reason: ' + args.status);
                 }
             });
         };

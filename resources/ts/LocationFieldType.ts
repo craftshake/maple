@@ -1,12 +1,9 @@
 module Maps {
     export class LocationFieldType extends Map {
 
-        geocoder: any;
-        $address: any;
         $lat: any;
         $lng: any;
-        $map: any;
-        $spinner: any;
+        geocoder: any;
 
         constructor(name: string, lat?: number, lng?: number, options?: any) {
             // Create the markers array for parent constructor            
@@ -19,16 +16,14 @@ module Maps {
             }
 
             // Get all those DOM elements
-            this.$address = $('#' + name + 'Address');
             this.$lat = $('#' + name + 'Lat');
             this.$lng = $('#' + name + 'Lng');
-            this.$spinner = $('#' + name + 'Spinner');
+
+            // Create the geocoder
+            this.geocoder = new Maps.Geocoder(name);
 
             // Call the constructor
             super(name, JSON.stringify(markers), options);
-
-            // Init the geocoder
-            this.geocoder = new google.maps.Geocoder();
 
             // Hello, someone there?
             this.addListeners();
@@ -50,35 +45,20 @@ module Maps {
                 _this.updateMarkerPosition(_this.$lat.val(), _this.$lng.val());
             });
 
-            // Prevent form submit on 'enter', geocode instead
-            this.$address.keydown(function (event) {
-                if(event.keyCode == 13) {
-                    event.preventDefault();
-                    _this.geocode();
-                    return false;
-                }      
-            });
-        }
-
-        geocode() {
-            this.$spinner.removeClass('hidden');
-            var _this = this;
-
-            // Geocode from the content of the address field
-            _this.geocoder.geocode({'address': this.$address.val()}, function(results, status) {
-                _this.$spinner.addClass('hidden');
-
+            // Listen to geocoding events
+            this.geocoder.$address.on('geocoded', function(event, args) {
                 // Update marker position on successful geocoding
-                if (status == google.maps.GeocoderStatus.OK) {
-                    var lat = results[0].geometry.location.lat();
-                    var lng = results[0].geometry.location.lng();
-                    _this.$lat.val(lat);
-                    _this.$lng.val(lng);
-                    _this.updateMarkerPosition(lat, lng);
-                } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
+                if (args.status == google.maps.GeocoderStatus.OK) {
+                    _this.$lat.val(args.location.lat());
+                    _this.$lng.val(args.location.lng());
+                    _this.addMarker(args.location);
+                }
+                else {
+                    alert('Geocode was not successful for the following reason: ' + args.status);
                 }
             });
+            
+            
         }
 
         addMarker(latLng: google.maps.LatLng): google.maps.Marker {
