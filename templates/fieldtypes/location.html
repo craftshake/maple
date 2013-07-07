@@ -3,11 +3,14 @@
 {% import "_includes/forms" as forms %}
 
 <div class="field">
-    <input id="{{ id ~ 'Address' }}" class="text address" />
-    <button id="{{ id ~ 'Geocode' }}" class="btn geocodeBtn" type="button">Geocode</button>
+    <p class="instructions">You can enter an address and press the 'Enter' key to geocode it.</p>
+    <input id="{{ id ~ 'Address' }}" class="text address fullwidth" placeholder="Ex: Paris, Tour Eiffel"/>
     <div id="{{ id ~ 'Spinner' }}" class="spinner hidden"></div>
 </div>
-<div id="{{ id ~ 'Map' }}" class="fullwidth mapCanvas"></div>
+<p class="instructions">You can add a marker by clicking on the map and you can remove a marker by right-clicking on it.</p>
+<div class="mapContainer">
+    <div id="{{ id ~ 'Map' }}" class="fullwidth mapCanvas"></div>
+</div>
 <div class="field">
     <div class="grid">
         <div class="col col50">

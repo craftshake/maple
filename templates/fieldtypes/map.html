@@ -1,4 +1,7 @@
-<div id="{{ id ~ 'Map' }}" class="fullwidth mapCanvas"></div>
+<p class="instructions">You can add a marker by clicking on the map and you can remove a marker by right-clicking on it.</p>
+<div class="mapContainer">
+    <div id="{{ id ~ 'Map' }}" class="fullwidth mapCanvas"></div>
+</div>
 <input name="{{ name }}" id="{{ id ~ 'Value' }}" type="hidden" value="hello" />
 
 {% includeCssResource "maps/css/location.css" %}

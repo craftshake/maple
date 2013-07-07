@@ -6,7 +6,6 @@ module Maps {
         $lat: any;
         $lng: any;
         $map: any;
-        $btn: any;
         $spinner: any;
 
         constructor(name: string, lat?: number, lng?: number, options?: any) {
@@ -24,7 +23,6 @@ module Maps {
             this.$address = $('#' + name + 'Address');
             this.$lat = $('#' + name + 'Lat');
             this.$lng = $('#' + name + 'Lng');
-            this.$btn = $('#' + name + 'Geocode');
             this.$spinner = $('#' + name + 'Spinner');
 
             super(name, JSON.stringify(markers), options);
@@ -47,8 +45,12 @@ module Maps {
             this.$lng.change(function () {
                 _this.updateMarkerPosition(_this.$lat.val(), _this.$lng.val());
             });
-            this.$btn.click(function () {
-                _this.geocode();
+            this.$address.keydown(function (event) {
+                if(event.keyCode == 13) {
+                    event.preventDefault();
+                    _this.geocode();
+                    return false;
+                }      
             });
         }
 

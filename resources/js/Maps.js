@@ -133,7 +133,6 @@ var Maps;
             this.$address = $('#' + name + 'Address');
             this.$lat = $('#' + name + 'Lat');
             this.$lng = $('#' + name + 'Lng');
-            this.$btn = $('#' + name + 'Geocode');
             this.$spinner = $('#' + name + 'Spinner');
                 _super.call(this, name, JSON.stringify(markers), options);
             this.geocoder = new google.maps.Geocoder();
@@ -150,8 +149,12 @@ var Maps;
             this.$lng.change(function () {
                 _this.updateMarkerPosition(_this.$lat.val(), _this.$lng.val());
             });
-            this.$btn.click(function () {
-                _this.geocode();
+            this.$address.keydown(function (event) {
+                if(event.keyCode == 13) {
+                    event.preventDefault();
+                    _this.geocode();
+                    return false;
+                }
             });
         };
         LocationFieldType.prototype.geocode = function () {

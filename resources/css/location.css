@@ -1,11 +1,13 @@
+.mapContainer {
+    height: 300px;
+}
+
 .mapCanvas {
-    height: 350px;
+    height: 100%;
 }
 
-.address {
-    width: 65%;
-}
-
-.geocodeBtn {
-    width: 25%;
+.field .spinner {
+    position: absolute;
+    right: 10px;
+    bottom: 0;
 }
