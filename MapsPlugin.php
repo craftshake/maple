@@ -15,7 +15,7 @@ class MapsPlugin extends BasePlugin
 
     public function getDeveloper()
     {
-        return 'Splash';
+        return 'Mario Friz';
     }
 
     public function getDeveloperUrl()
