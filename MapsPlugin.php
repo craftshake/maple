@@ -10,7 +10,7 @@ class MapsPlugin extends BasePlugin
 
     public function getVersion()
     {
-        return '0.1';
+        return '@version@';
     }
 
     public function getDeveloper()

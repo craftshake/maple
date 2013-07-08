@@ -12,25 +12,33 @@
         <exclude name="build/" />
     </fileset>
 
-    <!-- ============================================  -->
-    <!-- Target: prepare                               -->
-    <!-- ============================================  -->
-    <target name="prepare">
-        <propertyprompt propertyName="project.version" defaultValue="" promptText="Enter the version" />
+    <target name="clean">
+        <echo msg="Cleaning..." />
         <delete dir="${build.tempDir}" includeemptydirs="true" verbose="false" failonerror="false" />
-        <delete file="${dist.name}" failonerror="false" />
+        <delete verbose="false" failonerror="false">
+            <fileset dir="${build.dir}">
+                <include name="*.zip" />
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="prepare" depends="clean">
+        <propertyprompt propertyName="project.version" defaultValue="" promptText="Enter the version" />
         <echo msg="Making directory ${build.tempDir}" />
         <mkdir dir="${build.tempDir}" />
     </target>
 
-    <!-- ============================================  -->
-    <!-- Target: build                                 -->
-    <!-- ============================================  -->
     <target name="build" depends="prepare">
         <echo msg="Copying files to build directory..." />
 
         <copy todir="${build.tempDir}">
             <fileset refid="allfiles" />
+            <filterchain>
+                <stripphpcomments />
+                <replacetokens>
+                    <token key="version" value="${project.version}" />
+                </replacetokens>
+            </filterchain>
         </copy>
     </target>
 
@@ -47,9 +55,6 @@
         <exec command="java -jar yuicompressor-2.4.6.jar ${absfilename} -o ${absfilename}" />
     </target>
 
-    <!-- ============================================  -->
-    <!-- (DEFAULT)  Target: dist                       --> 
-    <!-- ============================================  -->
     <target name="dist" depends="minify">
         <echo msg="Creating archive..." />
 
