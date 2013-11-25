@@ -40,7 +40,7 @@
     var map;
     google.maps.event.addDomListener(window, 'load', function() {
         map = new Maps.LocationFieldType(
-            "{{ id }}",
+            "{{ id | namespaceInputId }}",
             {{ (value.lat is defined ? value.lat : 'null') }},
             {{ (value.lat is defined ? value.lng : 'null') }}
         );

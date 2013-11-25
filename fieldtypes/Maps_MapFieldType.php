@@ -17,7 +17,7 @@ class Maps_MapFieldType extends BaseFieldType
 	{
         craft()->templates->includeJsFile('http://maps.google.com/maps/api/js?sensor=false');
         craft()->templates->includeJsResource('maps/js/maps.js');
-        $id = rtrim(preg_replace('/[\[\]]+/', '-', $name), '-');
+        $id = craft()->templates->formatInputId($name);
 		return craft()->templates->render('maps/fieldtypes/map', array(
             'id' => $id,
             'name'  => $name,
