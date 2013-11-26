@@ -14,7 +14,7 @@ var Maps;
                 }
                 mapOptions = {
                     zoom: options.zoom || Map.defaults.zoom,
-                    center: options.center ? new google.maps.LatLng(options.center.jb, options.center.kb, false) : Map.defaults.center,
+                    center: options.center ? new google.maps.LatLng(options.center.ob, options.center.pb, false) : Map.defaults.center,
                     mapTypeId: options.mapTypeId || Map.defaults.mapTypeId
                 };
             } else {
@@ -59,7 +59,7 @@ var Maps;
         };
         return Map;
     })();
-    Maps.Map = Map;    
+    Maps.Map = Map;
 })(Maps || (Maps = {}));
 
 var Maps;
@@ -103,7 +103,7 @@ var Maps;
         };
         return Geocoder;
     })();
-    Maps.Geocoder = Geocoder;    
+    Maps.Geocoder = Geocoder;
 })(Maps || (Maps = {}));
 
 var __extends = this.__extends || function (d, b) {
@@ -166,7 +166,7 @@ var Maps;
         };
         return MapFieldType;
     })(Maps.Map);
-    Maps.MapFieldType = MapFieldType;    
+    Maps.MapFieldType = MapFieldType;
 })(Maps || (Maps = {}));
 
 var Maps;
@@ -241,7 +241,7 @@ var Maps;
         };
         return LocationFieldType;
     })(Maps.Map);
-    Maps.LocationFieldType = LocationFieldType;    
+    Maps.LocationFieldType = LocationFieldType;
 })(Maps || (Maps = {}));
 
 google.maps.visualRefresh = true;
