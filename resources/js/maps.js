@@ -158,7 +158,7 @@ var Maps;
         MapFieldType.prototype.addMarker = function (latLng) {
             var _this = this;
             var marker = _super.prototype.addMarker.call(this, latLng, true);
-            google.maps.event.addListener(marker, 'rightclick', function (event) {
+            google.maps.event.addListener(marker, 'click', function (event) {
                 _this.markers.splice(_this.markers.indexOf(marker), 1);
                 marker.setMap(null);
             });
