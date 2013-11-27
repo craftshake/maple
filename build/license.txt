@@ -1,5 +1,0 @@
-/**
- * @package   Craft Maps
- * @author    Mario Friz
- * @copyright Copyright (c) 2013, Mario Friz
- */
