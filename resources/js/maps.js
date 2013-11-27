@@ -227,7 +227,7 @@ var Maps;
                 _this.$lat.val(event.latLng.lat());
                 _this.$lng.val(event.latLng.lng());
             });
-            google.maps.event.addListener(marker, 'rightclick', function (event) {
+            google.maps.event.addListener(marker, 'click', function (event) {
                 marker.setMap(null);
                 _this.markers = [];
                 _this.$lat.val(null);
