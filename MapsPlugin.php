@@ -22,4 +22,11 @@ class MapsPlugin extends BasePlugin
     {
         return 'http://builtbysplash.com';
     }
+
+    public function hookAddTwigExtension()
+    {
+        Craft::import('plugins.maps.twigextensions.MapsTwigExtension');
+
+        return new MapsTwigExtension();
+    }
 }
