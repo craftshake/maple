@@ -19,7 +19,7 @@ class Maps_LocationModel extends BaseModel
     }
 
     public function isComplete() {
-        return !empty($this->lat) && !empty($this->lng);
+        return !(empty($this->lat) || empty($this->lng));
     }
 
 }
