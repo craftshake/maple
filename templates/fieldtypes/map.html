@@ -1,14 +1,14 @@
 <div class="field">
     <p class="instructions">You can enter an address and press the 'Enter' key to geocode it.</p>
-    <input id="{{ id ~ 'Address' }}" class="text address fullwidth" placeholder="Ex: Paris, Tour Eiffel"/>
-    <div id="{{ id ~ 'Spinner' }}" class="spinner hidden"></div>
+    <input id="{{ id ~ '-address' }}" class="text address fullwidth" placeholder="Ex: Paris, Tour Eiffel"/>
+    <div id="{{ id ~ '-spinner' }}" class="spinner hidden"></div>
 </div>
 
 <p class="instructions">You can add a marker by clicking on the map and you can remove a marker by clicking on it again.</p>
 <div class="mapContainer">
-    <div id="{{ id ~ 'Map' }}" class="fullwidth mapCanvas"></div>
+    <div id="{{ id ~ '-map' }}" class="fullwidth mapCanvas"></div>
 </div>
-<input name="{{ name }}" id="{{ id ~ 'Value' }}" type="hidden" value="hello" />
+<input name="{{ name }}" id="{{ id ~ '-value' }}" type="hidden" value="" />
 
 {% includeCssResource "maps/css/maps.css" %}
 {% set mapjs %}

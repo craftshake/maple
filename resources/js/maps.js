@@ -5,7 +5,7 @@ var Maps;
             this.autoZoom = false;
             this.name = name;
             this.markers = [];
-            this.$map = document.getElementById(name + 'Map');
+            this.$map = document.getElementById(name + '-map');
             var mapOptions;
             if(options) {
                 options = JSON.parse(options);
@@ -66,8 +66,8 @@ var Maps;
 (function (Maps) {
     var Geocoder = (function () {
         function Geocoder(name) {
-            this.$address = $('#' + name + 'Address');
-            this.$spinner = $('#' + name + 'Spinner');
+            this.$address = $('#' + name + '-address');
+            this.$spinner = $('#' + name + '-spinner');
             this.geocoder = new google.maps.Geocoder();
             this.addListeners();
         }
@@ -144,7 +144,7 @@ var Maps;
                         mapTypeId: _this.map.getMapTypeId()
                     }
                 };
-                $('#' + _this.name + 'Value').val(JSON.stringify(value));
+                $('#' + _this.name + '-value').val(JSON.stringify(value));
                 return true;
             });
             this.geocoder.$address.on('geocoded', function (event, args) {
@@ -183,8 +183,8 @@ var Maps;
                     }
                 ];
             }
-            this.$lat = $('#' + name + 'Lat');
-            this.$lng = $('#' + name + 'Lng');
+            this.$lat = $('#' + name + '-lat');
+            this.$lng = $('#' + name + '-lng');
             this.geocoder = new Maps.Geocoder(name);
                 _super.call(this, name, JSON.stringify(markers), options);
             this.addListeners();
