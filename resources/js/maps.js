@@ -8,14 +8,14 @@ var Maps;
             this.$map = document.getElementById(name + '-map');
             var mapOptions;
             if(options) {
-                options = JSON.parse(options);
-                if(options.autoZoom && options.autoZoom == true) {
+                tempOptions = JSON.parse(options);
+                if(tempOptions.autoZoom && tempOptions.autoZoom == true) {
                     this.autoZoom = true;
                 }
                 mapOptions = {
-                    zoom: options.zoom || Map.defaults.zoom,
-                    center: options.center ? new google.maps.LatLng(options.center.ob, options.center.pb, false) : Map.defaults.center,
-                    mapTypeId: options.mapTypeId || Map.defaults.mapTypeId
+                    zoom: tempOptions.zoom || Map.defaults.zoom,
+                    center: tempOptions.center ? new google.maps.LatLng(tempOptions.center.k, tempOptions.center.A, false) : Map.defaults.center,
+                    mapTypeId: tempOptions.mapTypeId || Map.defaults.mapTypeId
                 };
             } else {
                 mapOptions = Map.defaults;
@@ -31,7 +31,7 @@ var Maps;
             }
         }
         Map.defaults = {
-            zoom: 1,
+            zoom: 2,
             center: new google.maps.LatLng(0, 0, false),
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
@@ -111,13 +111,14 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 }
+
 var Maps;
 (function (Maps) {
     var MapFieldType = (function (_super) {
         __extends(MapFieldType, _super);
         function MapFieldType(name, markers, options) {
             if (typeof markers === "undefined") { markers = []; }
-                _super.call(this, name, markers, options);
+            _super.call(this, name, markers, options);
             this.geocoder = new Maps.Geocoder(name);
             this.addListeners();
         }

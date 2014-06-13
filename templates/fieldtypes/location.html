@@ -37,9 +37,8 @@
 </div>
 
 {% set mapjs %}
-    var map;
     google.maps.event.addDomListener(window, 'load', function() {
-        map = new Maps.LocationFieldType(
+        var map = new Maps.LocationFieldType(
             "{{ id | namespaceInputId }}",
             {{ (value.lat is defined ? value.lat : 'null') }},
             {{ (value.lat is defined ? value.lng : 'null') }}
