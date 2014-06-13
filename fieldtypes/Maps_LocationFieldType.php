@@ -35,9 +35,9 @@ class Maps_LocationFieldType extends BaseFieldType
 		return $location;
 	}
 
-    public function prepPostData($values)
+    public function prepValueFromPost($values)
     {
-        if (empty($values['lat']) || empty($values['lng'])) 
+        if (empty($values['lat']) || empty($values['lng']))
         {
             return null;
         }
