@@ -15,11 +15,13 @@ class MapsTwigExtension extends \Twig_Extension
 		);
 	}
 
-	public function mapFilter($argument, $autoZoom = true) {
+	public function mapFilter($argument, $autoZoom = false) {
 		$markers = array();
+		$options = array();
 		if ($argument instanceof Maps_MapModel)
 		{
 			$markers = $argument->markers;
+			$options = $argument->options;
 		}
 		else if ($argument instanceof Maps_LocationModel)
 		{
@@ -29,6 +31,7 @@ class MapsTwigExtension extends \Twig_Extension
                 	'lat' => $argument->lat,
                 	'lng' => $argument->lng,
             	);
+            	$autoZoom = true;
             }
 		}
 		else if (is_array($argument))
