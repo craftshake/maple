@@ -127,7 +127,7 @@ var Maps;
             google.maps.event.addListener(this.map, 'click', function (event) {
                 _this.addMarker(event.latLng);
             });
-            $('#content form').submit(function () {
+            $('#main form').submit(function () {
                 var marker;
                 var locations = [];
                 for(var i = 0; i < _this.markers.length; i++) {

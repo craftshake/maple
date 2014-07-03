@@ -1,7 +1,7 @@
 <?php
 namespace Craft;
 
-class Maps_LocationFieldType extends BaseFieldType
+class Maple_LocationFieldType extends BaseFieldType
 {
 	public function getName()
 	{
@@ -16,9 +16,9 @@ class Maps_LocationFieldType extends BaseFieldType
 	public function getInputHtml($name, $location)
 	{
         craft()->templates->includeJsFile('//maps.google.com/maps/api/js?sensor=false&v=3.16');
-        craft()->templates->includeJsResource('maps/js/maps.js');
+        craft()->templates->includeJsResource('maple/js/maple.js');
         $id = craft()->templates->formatInputId($name);
-		return craft()->templates->render('maps/fieldtypes/location', array(
+		return craft()->templates->render('maple/fieldtypes/location', array(
             'id' => $id,
             'name'  => $name,
             'value' => $location,
@@ -31,7 +31,7 @@ class Maps_LocationFieldType extends BaseFieldType
         {
             return null;
         }
-        $location = new Maps_LocationModel($values['lat'], $values['lng']);
+        $location = new Maple_LocationModel($values['lat'], $values['lng']);
 		return $location;
 	}
 
@@ -41,7 +41,7 @@ class Maps_LocationFieldType extends BaseFieldType
         {
             return null;
         }
-        $location = new Maps_LocationModel($values['lat'], $values['lng']);
+        $location = new Maple_LocationModel($values['lat'], $values['lng']);
         return $location;
     }
 }

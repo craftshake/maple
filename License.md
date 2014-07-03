@@ -1,4 +1,4 @@
-# Craft Maps for Craft License Agreement
+# Craft Maple for Craft License Agreement
 
 ## Usage
 
@@ -18,7 +18,7 @@ All copyright and proprietary notices and logos displayed by the Software or wit
 
 ## Technical Support
 
-User Guides and support are available at http://builtbysplash.com/. No representations or guarantees are made regarding the response time for support requests. Mario Friz reserves to right to terminate official technical support at any time and for any reason with or without notice.
+User Guides and support are available at http://craftshake.com/. No representations or guarantees are made regarding the response time for support requests. Mario Friz reserves to right to terminate official technical support at any time and for any reason with or without notice.
 
 ## Disclaimer of Warranty
 

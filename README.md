@@ -1,10 +1,10 @@
-# Map Plugin
+# Maple Plugin
 
 This is a map & location plugin built for [Craft](http://buildwithcraft.com).
 
 ## Usage
 
-There are two different fieldtypes included in Maps:
+There are two different fieldtypes included in Maple:
 
 - Map: If you want to store an entire map with multiple markers (ex: Nice surfing spots)
 - Location: If you want to store just a location (ex: Location for Shop entries)
@@ -46,5 +46,5 @@ _Let's say we have multiple Shop entries and each Shop has a location field_
 	{% set locations = locations|merge([entry.location]) %}
 {% endfor %}
 
-<div style="height: 300px">{{ craft.maps.renderMap(locations)|raw }}</div>
+<div style="height: 300px">{{ craft.maple.renderMap(locations)|raw }}</div>
 ```

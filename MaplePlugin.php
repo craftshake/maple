@@ -1,16 +1,16 @@
 <?php
 namespace Craft;
 
-class MapsPlugin extends BasePlugin
+class MaplePlugin extends BasePlugin
 {
     public function getName()
     {
-        return Craft::t('Maps');
+        return Craft::t('Maple');
     }
 
     public function getVersion()
     {
-        return '0.9.3';
+        return '0.9.4';
     }
 
     public function getDeveloper()
@@ -20,13 +20,13 @@ class MapsPlugin extends BasePlugin
 
     public function getDeveloperUrl()
     {
-        return 'http://builtbysplash.com';
+        return 'http://craftshake.com';
     }
 
     public function addTwigExtension()
     {
-        Craft::import('plugins.maps.twigextensions.MapsTwigExtension');
+        Craft::import('plugins.maple.twigextensions.MapleTwigExtension');
 
-        return new MapsTwigExtension();
+        return new MapleTwigExtension();
     }
 }

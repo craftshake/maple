@@ -1,11 +1,11 @@
 <?php
 namespace Craft;
 
-class MapsTwigExtension extends \Twig_Extension
+class MapleTwigExtension extends \Twig_Extension
 {
 	public function getName()
 	{
-		return 'Maps';
+		return 'Maple';
 	}
 
 	public function getFilters()
@@ -18,12 +18,12 @@ class MapsTwigExtension extends \Twig_Extension
 	public function mapFilter($argument, $autoZoom = false) {
 		$markers = array();
 		$options = array();
-		if ($argument instanceof Maps_MapModel)
+		if ($argument instanceof Maple_MapModel)
 		{
 			$markers = $argument->markers;
 			$options = $argument->options;
 		}
-		else if ($argument instanceof Maps_LocationModel)
+		else if ($argument instanceof Maple_LocationModel)
 		{
             if ($argument->isComplete())
             {
@@ -53,7 +53,7 @@ class MapsTwigExtension extends \Twig_Extension
 			$options['autoZoom'] = true;
 		}
 
-		$mapModel = new Maps_MapModel($markers, $options);
+		$mapModel = new Maple_MapModel($markers, $options);
 		$html = $mapModel->render();
 		$charset = craft()->templates->getTwig()->getCharset();
 

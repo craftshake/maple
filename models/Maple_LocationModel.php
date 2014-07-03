@@ -1,7 +1,7 @@
 <?php
 namespace Craft;
 
-class Maps_LocationModel extends BaseModel
+class Maple_LocationModel extends BaseModel
 {
 
     public function __construct($lat = 0, $lng = 0)

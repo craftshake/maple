@@ -10,7 +10,7 @@
 </div>
 <input name="{{ name }}" id="{{ id ~ '-value' }}" type="hidden" value="" />
 
-{% includeCssResource "maps/css/maps.css" %}
+{% includeCssResource "maple/css/maple.css" %}
 {% set mapjs %}
     google.maps.event.addDomListener(window, 'load', function() {
         var map = new Maps.MapFieldType(

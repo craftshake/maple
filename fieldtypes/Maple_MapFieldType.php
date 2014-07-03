@@ -1,7 +1,7 @@
 <?php
 namespace Craft;
 
-class Maps_MapFieldType extends BaseFieldType
+class Maple_MapFieldType extends BaseFieldType
 {
 	public function getName()
 	{
@@ -16,9 +16,9 @@ class Maps_MapFieldType extends BaseFieldType
 	public function getInputHtml($name, $map)
 	{
         craft()->templates->includeJsFile('//maps.google.com/maps/api/js?sensor=false&v=3.16');
-        craft()->templates->includeJsResource('maps/js/maps.js');
+        craft()->templates->includeJsResource('maple/js/maple.js');
         $id = craft()->templates->formatInputId($name);
-		return craft()->templates->render('maps/fieldtypes/map', array(
+		return craft()->templates->render('maple/fieldtypes/map', array(
             'id' => $id,
             'name'  => $name,
             'value' => $map,
@@ -28,11 +28,11 @@ class Maps_MapFieldType extends BaseFieldType
 	public function prepValue($value)
 	{
         if (empty($value)) {
-            return new Maps_MapModel();
+            return new Maple_MapModel();
         }
         $locations = array();
         foreach ($value['locations'] as $location) {
-            $locationModel = new Maps_LocationModel($location['lat'], $location['lng']);
+            $locationModel = new Maple_LocationModel($location['lat'], $location['lng']);
             if ($locationModel->isComplete())
             {
                 $locations[] = $locationModel;
@@ -42,7 +42,7 @@ class Maps_MapFieldType extends BaseFieldType
         {
             return null;
         }
-        $map = new Maps_MapModel($locations, $value['options']);
+        $map = new Maple_MapModel($locations, $value['options']);
         $map->markers = $map->markersToArray();
 		return $map;
 	}
